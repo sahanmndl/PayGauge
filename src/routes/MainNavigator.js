@@ -1,16 +1,16 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
-import ProfileView from "../views/nav/ProfileView";
 import AuthNavigator from "./AuthNavigator";
+import BottomNavigator from "./BottomNavigator";
 
 const Stack = createStackNavigator()
 
 function MainNavigator() {
     return (
-        <Stack.Navigator initialRouteName="ProfileView">
+        <Stack.Navigator initialRouteName="BottomNavigator">
             <Stack.Screen
-                name="ProfileView"
-                component={ProfileView}
+                name="BottomNavigator"
+                component={BottomNavigator}
                 options={{headerShown: false}}
             />
             <Stack.Screen
