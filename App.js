@@ -1,20 +1,33 @@
+import "react-native-gesture-handler";
+import { NavigationContainer, DarkTheme } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import AuthNavigator from "./src/routes/AuthNavigator";
+import { useEffect, useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Alert } from "react-native";
+import MainNavigator from "./src/routes/MainNavigator";
 
 export default function App() {
+
+  const [currentUser, setCurrentUser] = useState(null)
+
+  const fetchCurrentUser = async () => {
+    try {
+      const user = await AsyncStorage.getItem('userId')
+      setCurrentUser(user)
+    } catch (e) {
+      Alert.alert("Error!", e.message)
+    }
+  }
+
+  useEffect(() => {
+    fetchCurrentUser()
+  }, [currentUser])
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer theme={DarkTheme}>
+      <StatusBar style="light" />
+      {currentUser ? <MainNavigator /> : <AuthNavigator />}
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
