@@ -51,7 +51,7 @@ const RegisterView = () => {
 
     return (
         <View style={{flex: 1}}>
-            <View style={{flex: 0.1, alignItems: 'center', justifyContent: 'center'}}>
+            <View style={{flex: 0.1, alignItems: 'center'}}>
                 <Text style={{fontSize: 28, fontWeight: '700', color: 'white'}}>
                     Create your account
                 </Text>

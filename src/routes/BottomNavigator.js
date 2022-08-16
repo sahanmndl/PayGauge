@@ -6,13 +6,37 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import ChartsView from "../views/nav/ChartsView";
 import ProfileView from "../views/nav/ProfileView";
+import AddTransactionView from "../views/main/AddTransactionView";
+import { createStackNavigator } from "@react-navigation/stack";
 
 const BottomTabs = createMaterialBottomTabNavigator()
+const Stack = createStackNavigator()
+
+function StackNavigator() {
+    return (
+        <Stack.Navigator initialRouteName="HomeView">
+            <Stack.Screen
+                name="HomeView"
+                component={HomeView}
+                options={{headerShown: false}}
+            />
+            <Stack.Screen
+                name="AddTransactionView"
+                component={AddTransactionView}
+                options={{
+                    headerShown: true, 
+                    headerTitle: "Add Transaction",
+                    headerStyle: {backgroundColor: 'black' }
+                }}
+            />
+        </Stack.Navigator>
+    )
+}
 
 function BottomNavigator() {
     return (
         <BottomTabs.Navigator
-            initialRouteName="HomeView"
+            initialRouteName="StackNavigator"
             activeColor={Colors.BLUE}
             inactiveColor={Colors.DARK_GRAY}
             barStyle={{ backgroundColor: 'black' }}
@@ -20,8 +44,8 @@ function BottomNavigator() {
             shifting={false}
         >
             <BottomTabs.Screen
-                name="HomeView"
-                component={HomeView}
+                name="StackNavigator"
+                component={StackNavigator}
                 options={{
                     tabBarIcon: ({ color }) => (
                         <Entypo name="home" color={color} size={26} />
