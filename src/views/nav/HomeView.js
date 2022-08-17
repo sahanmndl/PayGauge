@@ -1,11 +1,14 @@
 import { LinearGradient } from "expo-linear-gradient";
 import React, { useEffect, useState } from "react";
-import { Alert, Image, StatusBar, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, Alert, FlatList, Image, StatusBar, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Colors from "../../constants/Colors";
 import Feather from "react-native-vector-icons/Feather";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
+import TransactionItem from "../../components/TransactionItem";
+import LottieView from 'lottie-react-native';
+import NoResults from "../../components/NoResults";
 
 const HomeView = () => {
 
@@ -67,6 +70,26 @@ const HomeView = () => {
                 </TouchableOpacity>
             </View>
             <View style={{flex: 0.6}}>
+                {loading ? 
+                    <View style={{alignItems: 'center', justifyContent: 'center'}}>
+                        <LottieView 
+                            style={{width: 120, height: 120}}
+                            source={require('../../../assets/loading.json')} 
+                            autoPlay 
+                            loop
+                        /> 
+                    </View>
+                :
+                    <FlatList
+                        data={transactions}
+                        keyExtractor={({_id}) => _id}
+                        showsVerticalScrollIndicator={false}
+                        ListEmptyComponent={NoResults}
+                        renderItem={({item}) => (
+                            <TransactionItem item={item} />
+                        )}
+                    />
+                }
                 <TouchableOpacity
                     style={styles.fab}
                     onPress={() => requestAnimationFrame(() => {
