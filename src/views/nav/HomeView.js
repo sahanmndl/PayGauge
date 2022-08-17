@@ -1,13 +1,43 @@
 import { LinearGradient } from "expo-linear-gradient";
-import React from "react";
-import { Image, StatusBar, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import { Alert, Image, StatusBar, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Colors from "../../constants/Colors";
 import Feather from "react-native-vector-icons/Feather";
 import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
 
 const HomeView = () => {
 
     const navigation = useNavigation()
+    const [transactions, setTransactions] = useState([])
+    const [loading, setLoading] = useState(false)
+    const [refresh, setRefresh] = useState(false)
+
+    const fetchTransactions = async () => {
+        const userId = await AsyncStorage.getItem('userId')
+        try {
+            setLoading(true)
+            await axios.get(`http://10.2.71.238:8000/api/transaction/user/${userId}`)
+                .then((response) => {
+                    var json = response.data.transactions.transactions
+                    console.log(json)
+                    setTransactions([...json])
+                })
+            return true
+        } catch (e) {
+            Alert.alert("Error!", "Cannot load projects! Please check your internet connection")
+            console.log(e.response)
+            return false
+        } finally {
+            setRefresh(false)
+            setLoading(false)
+        }
+    }
+
+    useEffect(() => {
+        fetchTransactions()
+    }, [])
 
     return (
         <View style={{flex: 1, paddingTop: StatusBar.currentHeight, paddingHorizontal: 10}}>
