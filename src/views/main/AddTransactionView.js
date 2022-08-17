@@ -1,13 +1,66 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity, Alert, ActivityIndicator } from "react-native";
 import { TextInput } from "react-native-paper";
 import Colors from "../../constants/Colors";
 import { Picker } from "@react-native-picker/picker";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
+import { useNavigation } from "@react-navigation/native";
 
 const AddTransactionView = () => {
 
+    const navigation = useNavigation()
+    const [label, setLabel] = useState("")
+    const [amount, setAmount] = useState()
+    const [note, setNote] = useState("")
     const [type, setType] = useState("")
     const [category, setCategory] = useState("")
+    const [loading, setLoading] = useState(false)
+
+    const addTransaction = async () => {
+        const currentTimestamp = new Date()
+        if(label.trim() == "" || amount == null) {
+            Alert.alert("Error!", "Inputs cannot be enpty")
+        } else if (type == "type") {
+            Alert.alert("Error!", "Please select your transaction type")
+        } else if (category == "category") {
+            Alert.alert("Error!", "Please select your transaction category")
+        } else {
+            setLoading(true)
+            try {
+                const userId = await AsyncStorage.getItem('userId')
+
+                var updatedAmount = amount
+                if(type == "income") {
+                    if(updatedAmount < 0) {
+                        updatedAmount = updatedAmount * -1
+                    }
+                } else if (type == "expense") {
+                    if(updatedAmount > 0) {
+                        updatedAmount = updatedAmount * -1
+                    }
+                }
+
+                const response = await axios.post('http://10.2.71.238:8000/api/transaction/create', {
+                    label: label.trim(),
+                    note: note.trim(),
+                    amount: updatedAmount,
+                    type: type,
+                    category: category,
+                    timestamp: currentTimestamp.getTime(),
+                    user: userId
+                })
+                const data = await response.data
+                navigation.goBack()
+                return data
+            } catch(e) {
+                console.log(e)
+                Alert.alert("Error!", "Unable to add transaction!")
+            } finally {
+                setLoading(false)
+            }
+        }
+    }
 
     return (
         <View style={{flex: 1, padding: 10, paddingBottom: 25}}>
@@ -25,6 +78,9 @@ const AddTransactionView = () => {
                     activeUnderlineColor={Colors.BLUE}
                     theme={{colors: {text: 'white'}}}
                     mode='flat'
+                    left={<TextInput.Icon name='label-variant' color={Colors.DARK_GRAY} />}
+                    value={label}
+                    onChangeText={text => setLabel(text)}
                 />
                 <TextInput
                     style={{width: '100%', backgroundColor: Colors.DARK, marginVertical: 10}}
@@ -35,6 +91,9 @@ const AddTransactionView = () => {
                     theme={{colors: {text: 'white'}}}
                     mode='flat'
                     keyboardType="numeric"
+                    left={<TextInput.Icon name='numeric' color={Colors.DARK_GRAY} />}
+                    value={amount}
+                    onChangeText={text => setAmount(text)}
                 />
                 <TextInput
                     style={{width: '100%', backgroundColor: Colors.DARK}}
@@ -44,6 +103,9 @@ const AddTransactionView = () => {
                     activeUnderlineColor={Colors.BLUE}
                     theme={{colors: {text: 'white'}}}
                     mode='flat'
+                    left={<TextInput.Icon name='note-edit' color={Colors.DARK_GRAY} />}
+                    value={note}
+                    onChangeText={text => setNote(text)}
                 />
             </View>
             <View style={{height: 20}} />
@@ -58,7 +120,7 @@ const AddTransactionView = () => {
                 <Picker.Item label="Income" value="income" style={styles.pickerItem}/>
                 <Picker.Item label="Expense" value="expense" style={styles.pickerItem}/>
             </Picker>
-            {type == "expense" ? (
+            {type == "income" ? (
                 <Picker
                     style={styles.picker}
                     mode="dropdown"
@@ -66,7 +128,25 @@ const AddTransactionView = () => {
                     selectedValue={category}
                     onValueChange={(val) => setCategory(val)}
                 >
-                    <Picker.Item label="Select Category" value="category" style={{backgroundColor: Colors.DARK, color: Colors.DARK_GRAY}}/>
+                    <Picker.Item label="Select Income Category" value="category" style={{backgroundColor: Colors.DARK, color: Colors.DARK_GRAY}}/>
+                    <Picker.Item label="Allowance" value="allowance" style={styles.pickerItem}/>
+                    <Picker.Item label="Commission" value="comission" style={styles.pickerItem}/>
+                    <Picker.Item label="Gifts" value="gifts" style={styles.pickerItem}/>
+                    <Picker.Item label="Interests" value="interests" style={styles.pickerItem}/>
+                    <Picker.Item label="Investments" value="investments" style={styles.pickerItem}/>
+                    <Picker.Item label="Salary" value="salary" style={styles.pickerItem}/>
+                    <Picker.Item label="Selling" value="selling" style={styles.pickerItem}/>
+                    <Picker.Item label="Miscellaneous" value="misc-income" style={styles.pickerItem}/>
+                </Picker>
+            ) : type == "expense" ? (
+                <Picker
+                    style={styles.picker}
+                    mode="dropdown"
+                    dropdownIconColor={Colors.DARK_GRAY}
+                    selectedValue={category}
+                    onValueChange={(val) => setCategory(val)}
+                >
+                    <Picker.Item label="Select Expense Category" value="category" style={{backgroundColor: Colors.DARK, color: Colors.DARK_GRAY}}/>
                     <Picker.Item label="Bills" value="bills" style={styles.pickerItem}/>
                     <Picker.Item label="Clothing" value="clothing" style={styles.pickerItem}/>
                     <Picker.Item label="Entertainment" value="entertainment" style={styles.pickerItem}/>
@@ -74,18 +154,21 @@ const AddTransactionView = () => {
                     <Picker.Item label="Purchases" value="purchases" style={styles.pickerItem}/>
                     <Picker.Item label="Subscriptions" value="subscriptions" style={styles.pickerItem}/>
                     <Picker.Item label="Transportation" value="transportation" style={styles.pickerItem}/>
-                    <Picker.Item label="Miscellaneous" value="miscellaneous" style={styles.pickerItem}/>
+                    <Picker.Item label="Miscellaneous" value="misc-expense" style={styles.pickerItem}/>
                 </Picker>
             ) : null}
             <TouchableOpacity
                 style={styles.btnSave}
                 onPress={() => requestAnimationFrame(() => {
-                    console.log('save')
+                    addTransaction()
                 })}
             >
-                <Text style={{fontSize: 16, fontWeight: '700', color: 'white'}}>
-                    Save
-                </Text>
+                {loading ?
+                    <ActivityIndicator color={'white'}/> : 
+                    <Text style={{fontSize: 16, fontWeight: '700', color: 'white'}}>
+                        Save
+                    </Text>
+                }
             </TouchableOpacity>
         </View>
     )
