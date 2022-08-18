@@ -2,10 +2,12 @@ import React from "react";
 import { Alert, Image, StyleSheet, Text, TouchableOpacity, View, ToastAndroid, Platform } from "react-native";
 import Colors from "../constants/Colors";
 import axios from "axios";
+import { useNavigation } from "@react-navigation/native";
 
 const TransactionItem = ({ item }) => {
 
     const { _id, label, note, amount, type, category, timestamp } = item
+    const navigation = useNavigation()
 
     const iso = new Date(timestamp)
     const ist = iso.toLocaleDateString()
@@ -40,6 +42,16 @@ const TransactionItem = ({ item }) => {
         <TouchableOpacity
             style={styles.container}
             onLongPress={() => deleteAlert()}
+            onPress={() => requestAnimationFrame(() => {
+                navigation.navigate('UpdateTransactionView', {
+                    _id: _id,
+                    label: label,
+                    note: note,
+                    amount: amount,
+                    type: type,
+                    category: category
+                })
+            })}
         >
             <View style={{flex: 0.2}}>
                 <Image

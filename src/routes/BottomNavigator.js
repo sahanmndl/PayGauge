@@ -8,9 +8,10 @@ import ChartsView from "../views/nav/ChartsView";
 import ProfileView from "../views/nav/ProfileView";
 import AddTransactionView from "../views/main/AddTransactionView";
 import { createStackNavigator } from "@react-navigation/stack";
+import UpdateTransactionView from "../views/main/UpdateTransactionView";
 
-const BottomTabs = createMaterialBottomTabNavigator()
 const Stack = createStackNavigator()
+const BottomTabs = createMaterialBottomTabNavigator()
 
 function StackNavigator() {
     return (
@@ -26,6 +27,15 @@ function StackNavigator() {
                 options={{
                     headerShown: true, 
                     headerTitle: "Add Transaction",
+                    headerStyle: {backgroundColor: 'black' }
+                }}
+            />
+            <Stack.Screen
+                name="UpdateTransactionView"
+                component={UpdateTransactionView}
+                options={{
+                    headerShown: true, 
+                    headerTitle: "Update Transaction",
                     headerStyle: {backgroundColor: 'black' }
                 }}
             />

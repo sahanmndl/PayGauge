@@ -9,8 +9,8 @@ const NoResults = () => {
             <LottieView 
                 style={{width: 120, height: 120}}
                 source={require('../../assets/no-items.json')} 
-                autoPlay 
-                loop
+                autoPlay
+                loop={false}
             />
             <Text style={styles.caption}>No Transactions Found!</Text>
         </View>

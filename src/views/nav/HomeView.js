@@ -51,13 +51,19 @@ const HomeView = () => {
                 })
             return true
         } catch (e) {
-            Alert.alert("Error!", "Cannot calculate balance")
+            Alert.alert("Error!", "Cannot fetch balance")
             console.log(e)
             return false
         } finally {
             setRefresh(false)
             setBalanceLoading(false)
         }
+    }
+
+    const onRefresh = () => {
+        setRefresh(true)
+        fetchTransactions()
+        fetchBalance()
     }
 
     useEffect(() => {
@@ -86,9 +92,11 @@ const HomeView = () => {
                             <View style={{paddingBottom: 10}}>
                                 {balanceLoading ? <ProgressBar indeterminate color={'coral'} /> : (
                                     <>
-                                        <Text style={{fontSize: 12, color: Colors.WHITISH, marginBottom: 4}}>MY BALANCE</Text>
+                                        <Text style={{fontSize: 12, color: Colors.WHITISH, marginBottom: 4}}>
+                                            MY BALANCE
+                                        </Text>
                                         <Text style={{fontSize: 28, fontWeight: '700', color: 'white'}}>
-                                            ₹{balance}
+                                            ₹{Math.round((balance + Number.EPSILON) * 100) / 100}
                                         </Text>
                                     </>
                                 )}
@@ -101,7 +109,7 @@ const HomeView = () => {
                 {loading ? 
                     <View style={{alignItems: 'center', justifyContent: 'center'}}>
                         <LottieView 
-                            style={{width: 120, height: 120}}
+                            style={{width: 100, height: 100}}
                             source={require('../../../assets/loading.json')} 
                             autoPlay 
                             loop
@@ -111,6 +119,8 @@ const HomeView = () => {
                     <FlatList
                         data={transactions}
                         keyExtractor={({_id}) => _id}
+                        refreshing={refresh}
+                        onRefresh={onRefresh}
                         showsVerticalScrollIndicator={false}
                         ListEmptyComponent={NoResults}
                         renderItem={({item}) => (
