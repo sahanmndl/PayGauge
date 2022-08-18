@@ -7,5 +7,7 @@ export default {
     DARK2: "#0F2027",
     WHITISH: "#EDEDED",
     WHITISH2: "#F7F7F7",
-    DARK_GRAY: "#757575"
+    DARK_GRAY: "#757575",
+    NIGHT_GREEN: "#03DAC6",
+    NIGHT_RED: "#CF6679"
 }

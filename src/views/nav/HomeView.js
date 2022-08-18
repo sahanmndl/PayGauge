@@ -1,9 +1,10 @@
 import { LinearGradient } from "expo-linear-gradient";
 import React, { useEffect, useState } from "react";
-import { ActivityIndicator, Alert, FlatList, Image, StatusBar, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Alert, FlatList, Image, StatusBar, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { ProgressBar } from "react-native-paper";
 import Colors from "../../constants/Colors";
 import Feather from "react-native-vector-icons/Feather";
-import { useNavigation } from "@react-navigation/native";
+import { useIsFocused, useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import TransactionItem from "../../components/TransactionItem";
@@ -12,9 +13,12 @@ import NoResults from "../../components/NoResults";
 
 const HomeView = () => {
 
+    const focused = useIsFocused()
     const navigation = useNavigation()
+    const [balance, setBalance] = useState()
     const [transactions, setTransactions] = useState([])
     const [loading, setLoading] = useState(false)
+    const [balanceLoading, setBalanceLoading] = useState(false)
     const [refresh, setRefresh] = useState(false)
 
     const fetchTransactions = async () => {
@@ -24,13 +28,12 @@ const HomeView = () => {
             await axios.get(`http://10.2.71.238:8000/api/transaction/user/${userId}`)
                 .then((response) => {
                     var json = response.data.transactions.transactions
-                    console.log(json)
                     setTransactions([...json])
                 })
             return true
         } catch (e) {
             Alert.alert("Error!", "Cannot load projects! Please check your internet connection")
-            console.log(e.response)
+            console.log(e)
             return false
         } finally {
             setRefresh(false)
@@ -38,16 +41,35 @@ const HomeView = () => {
         }
     }
 
+    const fetchBalance = async () => {
+        const userId = await AsyncStorage.getItem('userId')
+        try {
+            setBalanceLoading(true)
+            await axios.get(`http://10.2.71.238:8000/api/transaction/user/${userId}/balance`)
+                .then((response) => {
+                    setBalance(response.data.balance)
+                })
+            return true
+        } catch (e) {
+            Alert.alert("Error!", "Cannot calculate balance")
+            console.log(e)
+            return false
+        } finally {
+            setRefresh(false)
+            setBalanceLoading(false)
+        }
+    }
+
     useEffect(() => {
-        fetchTransactions()
-    }, [])
+        focused && fetchTransactions() && fetchBalance()
+    }, [focused])
 
     return (
         <View style={{flex: 1, paddingTop: StatusBar.currentHeight, paddingHorizontal: 10}}>
             <View style={{flex: 0.075, justifyContent: 'center'}}>
                 <Text style={{color: 'white', fontSize: 30, fontWeight: '700'}}>Hello, Sahan</Text>
             </View>
-            <View style={{flex: 0.325, justifyContent: 'center'}}>
+            <View style={{flex: 0.3, justifyContent: 'center'}}>
                 <TouchableOpacity style={{elevation: 8}}>
                     <LinearGradient
                         style={styles.card}
@@ -62,14 +84,20 @@ const HomeView = () => {
                                 />
                             </View>
                             <View style={{paddingBottom: 10}}>
-                                <Text style={{fontSize: 12, color: Colors.WHITISH2, marginBottom: 4}}>MY BALANCE</Text>
-                                <Text style={{fontSize: 28, fontWeight: '700', color: 'white'}}>$450000</Text>
+                                {balanceLoading ? <ProgressBar indeterminate color={'coral'} /> : (
+                                    <>
+                                        <Text style={{fontSize: 12, color: Colors.WHITISH, marginBottom: 4}}>MY BALANCE</Text>
+                                        <Text style={{fontSize: 28, fontWeight: '700', color: 'white'}}>
+                                            ₹{balance}
+                                        </Text>
+                                    </>
+                                )}
                             </View>
                         </View>
                     </LinearGradient>
                 </TouchableOpacity>
             </View>
-            <View style={{flex: 0.6}}>
+            <View style={{flex: 0.625}}>
                 {loading ? 
                     <View style={{alignItems: 'center', justifyContent: 'center'}}>
                         <LottieView 
