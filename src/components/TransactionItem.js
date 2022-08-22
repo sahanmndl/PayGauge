@@ -3,6 +3,7 @@ import { Alert, Image, StyleSheet, Text, TouchableOpacity, View, ToastAndroid, P
 import Colors from "../constants/Colors";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
+import API_LINKS from "../utils/API_LINKS";
 
 const TransactionItem = ({ item }) => {
 
@@ -13,7 +14,7 @@ const TransactionItem = ({ item }) => {
     const ist = iso.toLocaleDateString()
 
     const deleteProject = async () => {
-        await axios.delete(`http://10.2.71.238:8000/api/transaction/${_id}`)
+        await axios.delete(`${API_LINKS.TRANSACTION}/${_id}`)
             .then(() => 
                 Platform.OS == 'android' ? ToastAndroid.show('Project deleted!', ToastAndroid.LONG, ToastAndroid.BOTTOM)
                 : Platform.OS == 'ios' ? Alert.alert('Success!', 'Project deleted') : null)

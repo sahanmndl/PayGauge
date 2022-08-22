@@ -6,6 +6,7 @@ import { PieChart } from "react-native-chart-kit";
 import Colors from "../../constants/Colors";
 import { useIsFocused } from "@react-navigation/native";
 import { ProgressBar } from "react-native-paper";
+import API_LINKS from "../../utils/API_LINKS";
 
 const ChartsView = () => {
 
@@ -35,7 +36,7 @@ const ChartsView = () => {
         const userId = await AsyncStorage.getItem('userId')
         try {
             setLoading(true)
-            await axios.get(`http://10.2.71.238:8000/api/transaction/user/${userId}/data`)
+            await axios.get(`${API_LINKS.TRANSACTION}/user/${userId}/data`)
                 .then((response) => {
                     setTotalIncome(response.data.totalIncome)
                     setTotalExpense(response.data.totalExpense)
@@ -54,7 +55,7 @@ const ChartsView = () => {
         const userId = await AsyncStorage.getItem('userId')
         try {
             setLoading(true)
-            await axios.get(`http://10.2.71.238:8000/api/transaction/user/${userId}/income`)
+            await axios.get(`${API_LINKS.TRANSACTION}/user/${userId}/income`)
                 .then((response) => {
                     setAllowance(response.data.allowance)
                     setCommission(response.data.commission)
@@ -79,7 +80,7 @@ const ChartsView = () => {
         const userId = await AsyncStorage.getItem('userId')
         try {
             setLoading(true)
-            await axios.get(`http://10.2.71.238:8000/api/transaction/user/${userId}/expense`)
+            await axios.get(`${API_LINKS.TRANSACTION}/user/${userId}/expense`)
                 .then((response) => {
                     setBills(response.data.bills)
                     setClothing(response.data.clothing)

@@ -6,6 +6,7 @@ import { Picker } from "@react-native-picker/picker";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
+import API_LINKS from "../../utils/API_LINKS";
 
 const UpdateTransactionView = ({ route }) => {
 
@@ -43,7 +44,7 @@ const UpdateTransactionView = ({ route }) => {
                     }
                 }
 
-                const response = await axios.put(`http://10.2.71.238:8000/api/transaction/update/${_id}`, {
+                const response = await axios.put(`${API_LINKS.TRANSACTION}/update/${_id}`, {
                     label: labelUpdate.trim(),
                     note: noteUpdate.trim(),
                     amount: Math.round((updatedAmount + Number.EPSILON) * 100) / 100,

@@ -5,6 +5,7 @@ import Colors from "../../constants/Colors";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
+import API_LINKS from "../../utils/API_LINKS";
 
 const LoginView = () => {
 
@@ -21,7 +22,7 @@ const LoginView = () => {
         } else {
             setLoading(true)
             try {
-                const response = await axios.post(`http://10.2.71.238:8000/api/user/login`, {
+                const response = await axios.post(`${API_LINKS.USER}/login`, {
                     email: email.trim(),
                     password: password.trim()
                 })

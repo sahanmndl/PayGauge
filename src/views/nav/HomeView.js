@@ -10,6 +10,7 @@ import axios from "axios";
 import TransactionItem from "../../components/TransactionItem";
 import LottieView from 'lottie-react-native';
 import NoResults from "../../components/NoResults";
+import API_LINKS from "../../utils/API_LINKS";
 
 const HomeView = () => {
 
@@ -25,7 +26,7 @@ const HomeView = () => {
         const userId = await AsyncStorage.getItem('userId')
         try {
             setLoading(true)
-            await axios.get(`http://10.2.71.238:8000/api/transaction/user/${userId}`)
+            await axios.get(`${API_LINKS.TRANSACTION}/user/${userId}`)
                 .then((response) => {
                     var json = response.data.transactions.transactions
                     setTransactions([...json.reverse()])
@@ -44,7 +45,7 @@ const HomeView = () => {
         const userId = await AsyncStorage.getItem('userId')
         try {
             setBalanceLoading(true)
-            await axios.get(`http://10.2.71.238:8000/api/transaction/user/${userId}/balance`)
+            await axios.get(`${API_LINKS.TRANSACTION}/user/${userId}/balance`)
                 .then((response) => {
                     setBalance(response.data.balance)
                 })

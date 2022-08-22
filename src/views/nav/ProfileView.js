@@ -5,6 +5,7 @@ import { useIsFocused, useNavigation } from "@react-navigation/native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import Colors from "../../constants/Colors";
 import axios from "axios";
+import API_LINKS from "../../utils/API_LINKS";
 
 const ProfileView = () => {
 
@@ -18,8 +19,7 @@ const ProfileView = () => {
         try {
             await AsyncStorage.getItem('userId')
             .then(async (userId) => {
-                console.log(userId)
-                await axios.get(`http://10.2.71.238:8000/api/user/${userId}`)
+                await axios.get(`${API_LINKS.USER}/${userId}`)
                 .then((response) => setCurrentUser(response.data.user))
                 .catch((e) => {
                     Alert.alert('', 'Error!')
