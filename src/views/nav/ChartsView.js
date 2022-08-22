@@ -5,7 +5,6 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { PieChart } from "react-native-chart-kit";
 import Colors from "../../constants/Colors";
 import { useIsFocused } from "@react-navigation/native";
-import LottieView from 'lottie-react-native';
 import { ProgressBar } from "react-native-paper";
 
 const ChartsView = () => {
@@ -139,56 +138,56 @@ const ChartsView = () => {
             name: "Allowance",
             amount: allowance,
             color: Colors.NIGHT_RED,
-            legendFontSize: 15,
+            legendFontSize: 14,
             legendFontColor: Colors.DARK_GRAY,
         },
         {
             name: "Commission",
             amount: commission,
             color: Colors.NIGHT_PINK,
-            legendFontSize: 15,
+            legendFontSize: 14,
             legendFontColor: Colors.DARK_GRAY,
         },
         {
             name: "Gifts",
             amount: gifts,
             color: Colors.NIGHT_PURPLE,
-            legendFontSize: 15,
+            legendFontSize: 14,
             legendFontColor: Colors.DARK_GRAY,
         },
         {
             name: "Interests",
             amount: interests,
             color: Colors.NIGHT_BLUE,
-            legendFontSize: 15,
+            legendFontSize: 14,
             legendFontColor: Colors.DARK_GRAY,
         },
         {
             name: "Investments",
             amount: investments,
             color: Colors.NIGHT_ORANGE,
-            legendFontSize: 15,
+            legendFontSize: 14,
             legendFontColor: Colors.DARK_GRAY,
         },
         {
             name: "Salary",
             amount: salary,
             color: Colors.NIGHT_GREEN,
-            legendFontSize: 15,
+            legendFontSize: 14,
             legendFontColor: Colors.DARK_GRAY,
         },
         {
             name: "Selling",
             amount: selling,
             color: Colors.NIGHT_INDIGO,
-            legendFontSize: 15,
+            legendFontSize: 14,
             legendFontColor: Colors.DARK_GRAY,
         },
         {
             name: "Miscellaneous",
             amount: miscIncome,
             color: Colors.NIGHT_YELLOW,
-            legendFontSize: 15,
+            legendFontSize: 14,
             legendFontColor: Colors.DARK_GRAY,
         }
     ]
@@ -198,56 +197,56 @@ const ChartsView = () => {
             name: "Bills",
             amount: bills,
             color: Colors.NIGHT_RED,
-            legendFontSize: 15,
+            legendFontSize: 14,
             legendFontColor: Colors.DARK_GRAY,
         },
         {
             name: "Clothing",
             amount: clothing,
             color: Colors.NIGHT_PINK,
-            legendFontSize: 15,
+            legendFontSize: 14,
             legendFontColor: Colors.DARK_GRAY,
         },
         {
             name: "Entertainment",
             amount: entertainment,
             color: Colors.NIGHT_PURPLE,
-            legendFontSize: 15,
+            legendFontSize: 14,
             legendFontColor: Colors.DARK_GRAY,
         },
         {
             name: "Food",
             amount: food,
-            color: Colors.NIGHT_YELLOW,
-            legendFontSize: 15,
+            color: Colors.NIGHT_BLUE,
+            legendFontSize: 14,
             legendFontColor: Colors.DARK_GRAY,
         },
         {
             name: "Purchases",
             amount: purchases,
             color: Colors.NIGHT_ORANGE,
-            legendFontSize: 15,
+            legendFontSize: 14,
             legendFontColor: Colors.DARK_GRAY,
         },
         {
             name: "Subscriptions",
             amount: subscriptions,
             color: Colors.NIGHT_GREEN,
-            legendFontSize: 15,
+            legendFontSize: 14,
             legendFontColor: Colors.DARK_GRAY,
         },
         {
             name: "Transportation",
             amount: transportation,
             color: Colors.NIGHT_INDIGO,
-            legendFontSize: 15,
+            legendFontSize: 14,
             legendFontColor: Colors.DARK_GRAY,
         },
         {
             name: "Miscellaneous",
             amount: miscExpense,
-            color: Colors.NIGHT_BLUE,
-            legendFontSize: 15,
+            color: Colors.NIGHT_YELLOW,
+            legendFontSize: 14,
             legendFontColor: Colors.DARK_GRAY,
         }
     ]

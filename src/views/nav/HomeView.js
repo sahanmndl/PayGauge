@@ -28,7 +28,7 @@ const HomeView = () => {
             await axios.get(`http://10.2.71.238:8000/api/transaction/user/${userId}`)
                 .then((response) => {
                     var json = response.data.transactions.transactions
-                    setTransactions([...json])
+                    setTransactions([...json.reverse()])
                 })
             return true
         } catch (e) {
@@ -73,7 +73,7 @@ const HomeView = () => {
     return (
         <View style={{flex: 1, paddingTop: StatusBar.currentHeight, paddingHorizontal: 10}}>
             <View style={{flex: 0.075, justifyContent: 'center'}}>
-                <Text style={{color: 'white', fontSize: 30, fontWeight: '700'}}>Hello, Sahan</Text>
+                <Text style={{color: 'white', fontSize: 30, fontWeight: '700'}}>Transactions</Text>
             </View>
             <View style={{flex: 0.3, justifyContent: 'center'}}>
                 <TouchableOpacity style={{elevation: 8}}>
@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
     card: {
         height: '95%',
         backgroundColor: 'black',
-        borderRadius: 20,
+        borderRadius: 12,
         paddingVertical: 14,
         paddingHorizontal: 20
     },
