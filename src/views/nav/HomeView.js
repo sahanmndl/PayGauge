@@ -33,7 +33,6 @@ const HomeView = () => {
             return true
         } catch (e) {
             Alert.alert("Error!", "Cannot load projects! Please check your internet connection")
-            console.log(e)
             return false
         } finally {
             setRefresh(false)
@@ -52,7 +51,6 @@ const HomeView = () => {
             return true
         } catch (e) {
             Alert.alert("Error!", "Cannot fetch balance")
-            console.log(e)
             return false
         } finally {
             setRefresh(false)

@@ -56,7 +56,6 @@ const UpdateTransactionView = ({ route }) => {
                 navigation.goBack()
                 return data
             } catch(e) {
-                console.log(e)
                 Alert.alert("Error!", "Unable to update transaction!")
             } finally {
                 setLoading(false)

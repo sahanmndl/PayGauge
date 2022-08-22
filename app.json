@@ -4,13 +4,8 @@
     "slug": "PayGauge",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
+    "icon": "./assets/icon1.png",
+    "userInterfaceStyle": "dark",
     "updates": {
       "fallbackToCacheTimeout": 0
     },
@@ -22,12 +17,15 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/icon1.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.san101.paygauge",
+      "versionCode": 1,
+      "icon": "./assets/icon1.png"
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/icon1.png"
     }
   }
 }

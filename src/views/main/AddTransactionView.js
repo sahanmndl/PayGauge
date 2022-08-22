@@ -54,7 +54,6 @@ const AddTransactionView = () => {
                 navigation.goBack()
                 return data
             } catch(e) {
-                console.log(e)
                 Alert.alert("Error!", "Unable to add transaction!")
             } finally {
                 setLoading(false)

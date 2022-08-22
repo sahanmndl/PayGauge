@@ -43,7 +43,6 @@ const ChartsView = () => {
             return true
         } catch (e) {
             Alert.alert("Error!", "Cannot load data! Please check your internet connection")
-            console.log(e)
             return false
         } finally {
             setLoading(false)
@@ -65,12 +64,10 @@ const ChartsView = () => {
                     setSalary(response.data.salary)
                     setSelling(response.data.selling)
                     setMiscIncome(response.data.miscellaneous)
-                    console.log(response.data)
                 })
             return true
         } catch (e) {
             Alert.alert("Error!", "Cannot load data! Please check your internet connection")
-            console.log(e)
             return false
         } finally {
             setLoading(false)
@@ -96,7 +93,6 @@ const ChartsView = () => {
             return true
         } catch (e) {
             Alert.alert("Error!", "Cannot load data! Please check your internet connection")
-            console.log(e)
             return false
         } finally {
             setLoading(false)
