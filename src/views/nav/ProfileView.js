@@ -148,6 +148,7 @@ const styles = StyleSheet.create({
     btnText: {
         color: Colors.NIGHT_RED,
         fontSize: 16,
-        fontWeight: "700"
+        fontWeight: "700",
+        marginLeft: 4
     }
 })

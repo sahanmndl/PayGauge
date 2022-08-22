@@ -22,6 +22,24 @@ const HomeView = () => {
     const [balanceLoading, setBalanceLoading] = useState(false)
     const [refresh, setRefresh] = useState(false)
 
+    const fetchBalance = async () => {
+        const userId = await AsyncStorage.getItem('userId')
+        try {
+            setBalanceLoading(true)
+            await axios.get(`${API_LINKS.TRANSACTION}/user/${userId}/balance`)
+                .then((response) => {
+                    setBalance(response.data.balance)
+                })
+            return true
+        } catch (e) {
+            Alert.alert("Error!", "Cannot fetch balance")
+            return false
+        } finally {
+            setRefresh(false)
+            setBalanceLoading(false)
+        }
+    }
+
     const fetchTransactions = async () => {
         const userId = await AsyncStorage.getItem('userId')
         try {
@@ -41,24 +59,6 @@ const HomeView = () => {
         }
     }
 
-    const fetchBalance = async () => {
-        const userId = await AsyncStorage.getItem('userId')
-        try {
-            setBalanceLoading(true)
-            await axios.get(`${API_LINKS.TRANSACTION}/user/${userId}/balance`)
-                .then((response) => {
-                    setBalance(response.data.balance)
-                })
-            return true
-        } catch (e) {
-            Alert.alert("Error!", "Cannot fetch balance")
-            return false
-        } finally {
-            setRefresh(false)
-            setBalanceLoading(false)
-        }
-    }
-
     const onRefresh = () => {
         setRefresh(true)
         fetchTransactions()
@@ -66,13 +66,18 @@ const HomeView = () => {
     }
 
     useEffect(() => {
-        focused && fetchTransactions() && fetchBalance()
+        focused && fetchBalance() && fetchTransactions()
     }, [focused])
 
     return (
         <View style={{flex: 1, paddingTop: StatusBar.currentHeight, paddingHorizontal: 10}}>
             <View style={{flex: 0.075, justifyContent: 'center'}}>
-                <Text style={{color: 'white', fontSize: 30, fontWeight: '700'}}>Transactions</Text>
+                <Text style={{color: 'white', fontSize: 30, fontWeight: '700', paddingRight: 20}}
+                    numberOfLines={1}
+                    ellipsizeMode="tail"
+                >
+                    Transactions
+                </Text>
             </View>
             <View style={{flex: 0.3, justifyContent: 'center'}}>
                 <TouchableOpacity style={{elevation: 8}}>
