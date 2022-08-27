@@ -322,6 +322,7 @@ const ChartsView = () => {
                             chartConfig={chartConfig}
                             accessor={"amount"}
                             absolute={isEnabled === true ? true : false}
+                            avoidFalseZero={true}
                         />
                     </View>
                     <View style={{
@@ -344,6 +345,7 @@ const ChartsView = () => {
                             chartConfig={chartConfig}
                             accessor={"amount"}
                             absolute={isEnabled === true ? true : false}
+                            avoidFalseZero={true}
                         />
                     </View>
                 </ScrollView>
