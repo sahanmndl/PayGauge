@@ -13,12 +13,12 @@ const TransactionItem = ({ item }) => {
     const iso = new Date(timestamp)
     const ist = iso.toLocaleDateString()
 
-    const deleteProject = async () => {
+    const deleteTransaction = async () => {
         await axios.delete(`${API_LINKS.TRANSACTION}/${_id}`)
             .then(() => 
-                Platform.OS == 'android' ? ToastAndroid.show('Project deleted!', ToastAndroid.LONG, ToastAndroid.BOTTOM)
-                : Platform.OS == 'ios' ? Alert.alert('Success!', 'Project deleted') : null)
-            .catch(() => Alert.alert('Error!', 'Cannot delete project'))
+                Platform.OS == 'android' ? ToastAndroid.show('Transaction deleted!', ToastAndroid.LONG, ToastAndroid.BOTTOM)
+                : Platform.OS == 'ios' ? Alert.alert('Success!', 'Transaction deleted') : null)
+            .catch(() => Alert.alert('Error!', 'Cannot delete transaction'))
     }
 
     const deleteAlert = () => {
@@ -32,7 +32,7 @@ const TransactionItem = ({ item }) => {
                 },
                 {
                     text: 'YES',
-                    onPress: () => deleteProject()
+                    onPress: () => deleteTransaction()
                 }
             ],
             {cancelable: true}

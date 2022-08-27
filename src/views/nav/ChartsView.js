@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { StatusBar, Text, View, Alert, Dimensions, ScrollView, RefreshControl } from "react-native";
+import { StatusBar, Text, View, Alert, Dimensions, ScrollView, RefreshControl, Switch } from "react-native";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { PieChart } from "react-native-chart-kit";
@@ -7,6 +7,7 @@ import Colors from "../../constants/Colors";
 import { useIsFocused } from "@react-navigation/native";
 import { ProgressBar } from "react-native-paper";
 import API_LINKS from "../../utils/API_LINKS";
+import { VictoryPie } from "victory-native";
 
 const ChartsView = () => {
 
@@ -29,6 +30,7 @@ const ChartsView = () => {
     const [subscriptions, setSubscriptions] = useState(null)
     const [transportation, setTransportation] = useState(null)
     const [miscExpense, setMiscExpense] = useState(null)
+    const [isEnabled, setIsEnabled] = useState(false)
     const [refresh, setRefresh] = useState(false)
     const [loading, setLoading] = useState(false)
 
@@ -115,18 +117,12 @@ const ChartsView = () => {
 
     const totalData = [
         {
-            name: "Income",
-            amount: totalIncome,
-            color: Colors.NIGHT_GREEN,
-            legendFontSize: 15,
-            legendFontColor: Colors.DARK_GRAY,
+            x: "Income",
+            y: totalIncome,
         },
         {
-            name: "Expense",
-            amount: totalExpense * -1,
-            color: Colors.NIGHT_RED,
-            legendFontSize: 15,
-            legendFontColor: Colors.DARK_GRAY,
+            x: "Expense",
+            y: totalExpense * -1,
         }
     ]
 
@@ -251,8 +247,9 @@ const ChartsView = () => {
     return (
         <View style={{flex: 1, paddingTop: StatusBar.currentHeight, paddingHorizontal: 10}}>
             <View style={{flex: 0.075, justifyContent: 'center'}}>
-                <Text style={{color: 'white', fontSize: 30, fontWeight: '700'}}>Statistics</Text>
+                <Text style={{color: 'white', fontSize: 30, fontWeight: '700'}}>Insights</Text>
             </View>
+            
             {loading ? (
                 <ProgressBar indeterminate color={'coral'} />
             ) : (
@@ -272,12 +269,13 @@ const ChartsView = () => {
                         borderRadius: 8, 
                         paddingBottom: 10
                     }}>
-                        <PieChart
+                        <VictoryPie
                             data={totalData}
+                            colorScale={[Colors.NIGHT_GREEN, Colors.NIGHT_RED]}
                             width={WIDTH}
-                            height={200}
-                            chartConfig={chartConfig}
-                            accessor={"amount"}
+                            height={270}
+                            animate={{duration: 2000}}
+                            style={{labels: {fontSize: 14, fill: Colors.DARK_GRAY}}}
                         />
                         <View style={{
                             flex: 1, 
@@ -294,12 +292,22 @@ const ChartsView = () => {
                             </Text>
                         </View>
                     </View>
+                    <View style={{flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
+                        <Text style={{color: Colors.DARK_GRAY, fontSize: 16}}>
+                            Show absolute values
+                        </Text>
+                        <Switch
+                            trackColor={{ false: "#767577", true: "#87CEEB" }}
+                            thumbColor={isEnabled ? Colors.BLUE : "#f4f3f4"}
+                            onValueChange={() => setIsEnabled(!isEnabled)}
+                            value={isEnabled}
+                        />
+                    </View>
                     <View style={{
                         flex: 0.325, 
                         justifyContent: 'center', 
                         backgroundColor: Colors.DARK, 
                         borderRadius: 8,
-                        marginTop: 20,
                         paddingBottom: 10
                     }}>
                         <View style={{flex: 1, paddingHorizontal: 10, marginTop: 10}}>
@@ -313,6 +321,7 @@ const ChartsView = () => {
                             height={200}
                             chartConfig={chartConfig}
                             accessor={"amount"}
+                            absolute={isEnabled === true ? true : false}
                         />
                     </View>
                     <View style={{
@@ -321,7 +330,7 @@ const ChartsView = () => {
                         backgroundColor: Colors.DARK, 
                         borderRadius: 8,
                         marginTop: 20,
-                        paddingBottom: 10
+                        paddingBottom: 10,
                     }}>
                         <View style={{flex: 1, paddingHorizontal: 10, marginTop: 10}}>
                             <Text style={{color: Colors.DARK_GRAY, fontSize: 16}}>
@@ -334,6 +343,7 @@ const ChartsView = () => {
                             height={200}
                             chartConfig={chartConfig}
                             accessor={"amount"}
+                            absolute={isEnabled === true ? true : false}
                         />
                     </View>
                 </ScrollView>

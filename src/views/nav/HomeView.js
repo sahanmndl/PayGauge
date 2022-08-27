@@ -51,7 +51,7 @@ const HomeView = () => {
                 })
             return true
         } catch (e) {
-            Alert.alert("Error!", "Cannot load projects! Please check your internet connection")
+            Alert.alert("Error!", "Cannot load transactions! Please check your internet connection")
             return false
         } finally {
             setRefresh(false)
@@ -76,7 +76,7 @@ const HomeView = () => {
                     numberOfLines={1}
                     ellipsizeMode="tail"
                 >
-                    Transactions
+                    Home
                 </Text>
             </View>
             <View style={{flex: 0.3, justifyContent: 'center'}}>
@@ -109,7 +109,12 @@ const HomeView = () => {
                     </LinearGradient>
                 </TouchableOpacity>
             </View>
-            <View style={{flex: 0.625}}>
+            <View style={{flexDirection: 'row'}}>
+                <Text style={{fontSize: 17, color: Colors.WHITISH}}>
+                    Recent Transactions
+                </Text>
+            </View>
+            <View style={{flex: 0.625, marginTop: 15, minHeight: 2}}>
                 {loading ? 
                     <View style={{alignItems: 'center', justifyContent: 'center'}}>
                         <LottieView 
@@ -121,7 +126,7 @@ const HomeView = () => {
                     </View>
                 :
                     <FlatList
-                        data={transactions}
+                        data={transactions.slice(0, 10)}
                         keyExtractor={({_id}) => _id}
                         refreshing={refresh}
                         onRefresh={onRefresh}
