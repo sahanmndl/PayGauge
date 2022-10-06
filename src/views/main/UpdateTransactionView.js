@@ -23,7 +23,7 @@ const UpdateTransactionView = ({ route }) => {
     const updateTransaction = async () => {
         const currentTimestamp = new Date()
         if(labelUpdate.trim() == "" || amountUpdate.trim() == "") {
-            Alert.alert("Error!", "Inputs cannot be enpty")
+            Alert.alert("Error!", "Inputs cannot be empty")
         } else if (typeUpdate == "type") {
             Alert.alert("Error!", "Please select your transaction type")
         } else if (categoryUpdate == "category") {
@@ -74,7 +74,7 @@ const UpdateTransactionView = ({ route }) => {
             }}>
                 <TextInput
                     style={{width: '100%', backgroundColor: Colors.DARK}}
-                    placeholder="Label"
+                    placeholder="Label*"
                     placeholderTextColor={Colors.DARK_GRAY}
                     outlineColor={Colors.DARK_GRAY}
                     activeUnderlineColor={Colors.BLUE}
@@ -87,7 +87,7 @@ const UpdateTransactionView = ({ route }) => {
                 />
                 <TextInput
                     style={{width: '100%', backgroundColor: Colors.DARK, marginVertical: 10}}
-                    placeholder="Amount"
+                    placeholder="Amount*"
                     placeholderTextColor={Colors.DARK_GRAY}
                     outlineColor={Colors.DARK_GRAY}
                     activeUnderlineColor={Colors.BLUE}
@@ -100,12 +100,15 @@ const UpdateTransactionView = ({ route }) => {
                     onChangeText={text => setAmountUpdate(text)}
                 />
                 <TextInput
-                    style={{width: '100%', backgroundColor: Colors.DARK}}
-                    placeholder="Note (Optional)"
+                    style={{width: '100%', backgroundColor: Colors.DARK, maxHeight: 180}}
+                    placeholder="Note"
                     placeholderTextColor={Colors.DARK_GRAY}
                     outlineColor={Colors.DARK_GRAY}
                     activeUnderlineColor={Colors.BLUE}
                     theme={{colors: {text: 'white'}}}
+                    multiline={true}
+                    numberOfLines={5}
+                    maxLength={128}
                     mode='flat'
                     left={<TextInput.Icon name='note-edit' color={Colors.DARK_GRAY} />}
                     value={noteUpdate}
