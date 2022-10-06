@@ -84,8 +84,17 @@ const ProfileView = () => {
 
     return (
         <View style={{flex: 1, paddingTop: StatusBar.currentHeight, paddingHorizontal: 10}}>
-            <View style={{flex: 0.075, justifyContent: 'center'}}>
+            <View style={{flex: 0.075, alignItems: 'center', justifyContent: 'space-between', display: 'flex', flexDirection: 'row'}}>
                 <Text style={{color: 'white', fontSize: 30, fontWeight: '700'}}>My Profile</Text>
+                <TouchableOpacity
+                    disabled={loading ? true : false}
+                    onPress={() => logoutAlert()}
+                >
+                    {loading ?
+                        <ActivityIndicator color={'white'}/>
+                        : <Text style={styles.btnText}>Logout</Text>
+                    }
+                </TouchableOpacity>
             </View>
                 <View style={{height: 10}} />
                 <ScrollView
@@ -120,16 +129,6 @@ const ProfileView = () => {
                             </Text>
                         </View>
                     </View>
-                    <View style={{height: 20}} />
-                    <TouchableOpacity
-                        disabled={loading ? true : false}
-                        onPress={() => logoutAlert()}
-                    >
-                        {loading ?
-                            <ActivityIndicator color={'white'}/>
-                            : <Text style={styles.btnText}>LogOut</Text>
-                        }
-                    </TouchableOpacity>
                 </ScrollView>
         </View>
     )
@@ -146,6 +145,7 @@ const styles = StyleSheet.create({
         elevation: 4
     },
     btnText: {
+        alignSelf: "flex-end",
         color: Colors.NIGHT_RED,
         fontSize: 16,
         fontWeight: "700",
