@@ -49,12 +49,12 @@ const LoginView = () => {
 
     return (
         <View style={{flex: 1}}>
-            <View style={{flex: 0.1, alignItems: 'center'}}>
+            <View style={{flex: 0.1, alignItems: 'center', paddingTop: '5%'}}>
                 <Text style={{fontSize: 28, fontWeight: '700', color: 'white'}}>
                     Welcome back!
                 </Text>
             </View>
-            <View style={{flex: 0.8, alignItems: 'center', justifyContent: 'center'}}>
+            <View style={{flex: 0.75, alignItems: 'center', justifyContent: 'center'}}>
                 <TextInput
                     style={styles.textInput}
                     mode='outlined'
@@ -94,7 +94,7 @@ const LoginView = () => {
                     }
                 </TouchableOpacity>
             </View>
-            <View style={{flex: 0.1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
+            <View style={{flex: 0.15, flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
                 <Text style={{color: Colors.DARK_GRAY}}>Don't have an account?</Text>
                 <TouchableOpacity onPress={() => navigation.navigate('RegisterView')}>
                     <Text style={{marginStart: 4, color: Colors.BLUE, fontWeight: '500'}}>Sign Up</Text>

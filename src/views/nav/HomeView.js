@@ -1,6 +1,6 @@
 import { LinearGradient } from "expo-linear-gradient";
 import React, { useEffect, useState } from "react";
-import { Alert, FlatList, Image, StatusBar, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {Alert, FlatList, Image, SafeAreaView, StatusBar, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import { ProgressBar } from "react-native-paper";
 import Colors from "../../constants/Colors";
 import Feather from "react-native-vector-icons/Feather";
@@ -70,16 +70,16 @@ const HomeView = () => {
     }, [focused])
 
     return (
-        <View style={{flex: 1, paddingTop: StatusBar.currentHeight, paddingHorizontal: 10}}>
-            <View style={{flex: 0.075, justifyContent: 'center'}}>
-                <Text style={{color: 'white', fontSize: 30, fontWeight: '700', paddingRight: 20}}
+        <SafeAreaView style={{flex: 1, paddingTop: StatusBar.currentHeight, paddingHorizontal: 10}}>
+            <View style={{flex: 0.075, justifyContent: 'center', paddingHorizontal: 10}}>
+                <Text style={{color: 'white', fontSize: 30, fontWeight: '700'}}
                     numberOfLines={1}
                     ellipsizeMode="tail"
                 >
                     Home
                 </Text>
             </View>
-            <View style={{flex: 0.3, justifyContent: 'center'}}>
+            <View style={{flex: 0.3, justifyContent: 'center', paddingHorizontal: 10}}>
                 <TouchableOpacity style={{elevation: 8}}>
                     <LinearGradient
                         style={styles.card}
@@ -109,12 +109,12 @@ const HomeView = () => {
                     </LinearGradient>
                 </TouchableOpacity>
             </View>
-            <View style={{flexDirection: 'row'}}>
+            <View style={{flexDirection: 'row', paddingHorizontal: 10}}>
                 <Text style={{fontSize: 17, color: Colors.WHITISH}}>
                     Recent Transactions
                 </Text>
             </View>
-            <View style={{flex: 0.625, marginTop: 15, minHeight: 2}}>
+            <View style={{flex: 0.625, marginTop: 15, minHeight: 2, paddingHorizontal: 10}}>
                 {loading ? 
                     <View style={{alignItems: 'center', justifyContent: 'center'}}>
                         <LottieView 
@@ -146,7 +146,7 @@ const HomeView = () => {
                     <Feather name='plus' size={26} color='#FFF' />
                 </TouchableOpacity>
             </View>
-        </View>
+        </SafeAreaView>
     )
 }
 
@@ -170,10 +170,6 @@ const styles = StyleSheet.create({
         right: 28,
         backgroundColor: Colors.BLUE,
         borderRadius: 100,
-        shadowColor: '#FFF',
-        shadowOffset: {width: 0, height: 2},
-        shadowOpacity: 1,
-        shadowRadius: 4,
         elevation: 4,
     },
 })

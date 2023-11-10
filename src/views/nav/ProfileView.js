@@ -1,5 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { Text, StatusBar, View, StyleSheet, ScrollView, RefreshControl, TouchableOpacity, ActivityIndicator, Alert } from "react-native";
+import {
+    Text,
+    StatusBar,
+    View,
+    StyleSheet,
+    ScrollView,
+    RefreshControl,
+    TouchableOpacity,
+    ActivityIndicator,
+    Alert,
+    SafeAreaView
+} from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useIsFocused, useNavigation } from "@react-navigation/native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
@@ -83,13 +94,14 @@ const ProfileView = () => {
     }, [isFocused])
 
     return (
-        <View style={{flex: 1, paddingTop: StatusBar.currentHeight, paddingHorizontal: 10}}>
-            <View style={{flex: 0.075, justifyContent: 'center'}}>
+        <SafeAreaView style={{flex: 1, paddingTop: StatusBar.currentHeight, paddingHorizontal: 10}}>
+            <View style={{flex: 0.075, justifyContent: 'center', paddingHorizontal: 10}}>
                 <Text style={{color: 'white', fontSize: 30, fontWeight: '700'}}>My Profile</Text>
             </View>
                 <View style={{height: 10}} />
                 <ScrollView
-                    style={{flex: 0.925}}
+                    style={{flex: 0.925, paddingHorizontal: 10}}
+                    showsVerticalScrollIndicator={false}
                     refreshControl={
                         <RefreshControl
                             refreshing={refresh}
@@ -131,7 +143,7 @@ const ProfileView = () => {
                         }
                     </TouchableOpacity>
                 </ScrollView>
-        </View>
+        </SafeAreaView>
     )
 }
 

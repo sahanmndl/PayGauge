@@ -1,8 +1,8 @@
-import { useIsFocused } from "@react-navigation/native";
-import React, { useEffect, useState } from "react";
-import { FlatList, StatusBar, StyleSheet, Text, View, Alert } from "react-native";
+import {useIsFocused} from "@react-navigation/native";
+import React, {useEffect, useState} from "react";
+import {Alert, FlatList, SafeAreaView, StatusBar, StyleSheet, Text, View} from "react-native";
 import Colors from "../../constants/Colors";
-import { Picker } from "@react-native-picker/picker";
+import {Picker} from "@react-native-picker/picker";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import API_LINKS from "../../utils/API_LINKS";
@@ -47,42 +47,44 @@ const TransactionsView = () => {
     }, [isFocused])
 
     return (
-        <View style={{flex: 1, paddingTop: StatusBar.currentHeight, paddingHorizontal: 10}}>
-            <View style={{flex: 0.075, justifyContent: 'center'}}>
-                <Text style={{color: 'white', fontSize: 30, fontWeight: '700', paddingRight: 20}}
-                    numberOfLines={1}
-                    ellipsizeMode="tail"
+        <SafeAreaView style={{flex: 1, paddingTop: StatusBar.currentHeight, paddingHorizontal: 10}}>
+            <View style={{flex: 0.075, justifyContent: 'center', paddingHorizontal: 10}}>
+                <Text style={{color: 'white', fontSize: 30, fontWeight: '700'}}
+                      numberOfLines={1}
+                      ellipsizeMode="tail"
                 >
                     Transactions
                 </Text>
             </View>
-            <View style={{height: 15}} />
-            <Picker
-                style={styles.picker}
-                mode="dropdown"
-                dropdownIconColor={Colors.DARK_GRAY}
-                selectedValue={typeFilter}
-                onValueChange={(val) => setTypeFilter(val)}
-            >
-                <Picker.Item label="All" value="all" style={styles.pickerItem}/>
-                <Picker.Item label="Income" value="income" style={styles.pickerItem}/>
-                <Picker.Item label="Expense" value="expense" style={styles.pickerItem}/>
-            </Picker>
-            <View style={{height: 20}} />
-            <View style={{flex: 0.9}}>
-                {loading ? 
+            <View style={{height: 15}}/>
+            <View style={{paddingHorizontal: 10}}>
+                <Picker
+                    style={styles.picker}
+                    mode="dropdown"
+                    dropdownIconColor={Colors.DARK_GRAY}
+                    selectedValue={typeFilter}
+                    onValueChange={(val) => setTypeFilter(val)}
+                >
+                    <Picker.Item label="All" value="all" color={'white'} style={styles.pickerItem}/>
+                    <Picker.Item label="Income" value="income" color={'white'} style={styles.pickerItem}/>
+                    <Picker.Item label="Expense" value="expense" color={'white'} style={styles.pickerItem}/>
+                </Picker>
+            </View>
+            <View style={{height: 20}}/>
+            <View style={{flex: 0.9, paddingHorizontal: 10}}>
+                {loading ?
                     <View style={{alignItems: 'center', justifyContent: 'center'}}>
-                        <LottieView 
+                        <LottieView
                             style={{width: 100, height: 100}}
-                            source={require('../../../assets/loading.json')} 
-                            autoPlay 
+                            source={require('../../../assets/loading.json')}
+                            autoPlay
                             loop
-                        /> 
+                        />
                     </View>
-                :
+                    :
                     <FlatList
-                        data={typeFilter == 'income' ? transactions.filter(it => it.type == "income") : 
-                                typeFilter == 'expense' ? transactions.filter(it => it.type == "expense") :
+                        data={typeFilter == 'income' ? transactions.filter(it => it.type == "income") :
+                            typeFilter == 'expense' ? transactions.filter(it => it.type == "expense") :
                                 transactions}
                         keyExtractor={({_id}) => _id}
                         refreshing={refresh}
@@ -92,12 +94,12 @@ const TransactionsView = () => {
                         initialNumToRender={20}
                         removeClippedSubviews={false}
                         renderItem={({item}) => (
-                            <TransactionItem item={item} />
+                            <TransactionItem item={item}/>
                         )}
                     />
                 }
             </View>
-        </View>
+        </SafeAreaView>
     )
 }
 
@@ -107,10 +109,11 @@ const styles = StyleSheet.create({
     picker: {
         width: '100%',
         borderWidth: 1,
-        backgroundColor: Colors.DARK
+        backgroundColor: Colors.DARK,
+        borderRadius: 8
     },
     pickerItem: {
-        backgroundColor: Colors.DARK, 
+        backgroundColor: Colors.DARK,
         color: 'white',
     },
 })

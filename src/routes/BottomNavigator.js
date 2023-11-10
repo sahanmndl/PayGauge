@@ -1,4 +1,4 @@
-import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
+import {createMaterialBottomTabNavigator} from "@react-navigation/material-bottom-tabs";
 import React from "react";
 import HomeView from "../views/nav/HomeView";
 import Colors from "../constants/Colors";
@@ -7,7 +7,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import ChartsView from "../views/nav/ChartsView";
 import ProfileView from "../views/nav/ProfileView";
 import AddTransactionView from "../views/main/AddTransactionView";
-import { createStackNavigator } from "@react-navigation/stack";
+import {createStackNavigator} from "@react-navigation/stack";
 import UpdateTransactionView from "../views/main/UpdateTransactionView";
 import TransactionsView from "../views/nav/TransactionsView";
 
@@ -26,18 +26,20 @@ function StackNavigator1() {
                 name="AddTransactionView"
                 component={AddTransactionView}
                 options={{
-                    headerShown: true, 
+                    headerShown: true,
                     headerTitle: "Add Transaction",
-                    headerStyle: {backgroundColor: 'black' }
+                    headerBackTitle: "Home",
+                    headerStyle: {backgroundColor: 'black'}
                 }}
             />
             <Stack.Screen
                 name="UpdateTransactionView"
                 component={UpdateTransactionView}
                 options={{
-                    headerShown: true, 
+                    headerShown: true,
                     headerTitle: "Update Transaction",
-                    headerStyle: {backgroundColor: 'black' }
+                    headerBackTitle: "Home",
+                    headerStyle: {backgroundColor: 'black'}
                 }}
             />
         </Stack.Navigator>
@@ -56,9 +58,10 @@ function StackNavigator2() {
                 name="UpdateTransactionView"
                 component={UpdateTransactionView}
                 options={{
-                    headerShown: true, 
+                    headerShown: true,
                     headerTitle: "Update Transaction",
-                    headerStyle: {backgroundColor: 'black' }
+                    headerBackTitle: "Transactions",
+                    headerStyle: {backgroundColor: 'black'}
                 }}
             />
         </Stack.Navigator>
@@ -71,7 +74,7 @@ function BottomNavigator() {
             initialRouteName="StackNavigator"
             activeColor={Colors.BLUE}
             inactiveColor={Colors.DARK_GRAY}
-            barStyle={{ backgroundColor: 'black' }}
+            barStyle={{backgroundColor: 'black'}}
             labeled={false}
             shifting={false}
         >
@@ -79,8 +82,8 @@ function BottomNavigator() {
                 name="StackNavigator1"
                 component={StackNavigator1}
                 options={{
-                    tabBarIcon: ({ color }) => (
-                        <Entypo name="home" color={color} size={26} />
+                    tabBarIcon: ({color}) => (
+                        <Entypo name="home" color={color} size={26}/>
                     )
                 }}
             />
@@ -88,8 +91,8 @@ function BottomNavigator() {
                 name="StackNavigator2"
                 component={StackNavigator2}
                 options={{
-                    tabBarIcon: ({ color }) => (
-                        <MaterialCommunityIcons name="format-list-bulleted" color={color} size={26} />
+                    tabBarIcon: ({color}) => (
+                        <MaterialCommunityIcons name="format-list-bulleted" color={color} size={26}/>
                     )
                 }}
             />
@@ -97,8 +100,8 @@ function BottomNavigator() {
                 name="ChartsView"
                 component={ChartsView}
                 options={{
-                    tabBarIcon: ({ color }) => (
-                        <MaterialCommunityIcons name="chart-box" color={color} size={26} />
+                    tabBarIcon: ({color}) => (
+                        <MaterialCommunityIcons name="chart-box" color={color} size={26}/>
                     )
                 }}
             />
@@ -106,8 +109,8 @@ function BottomNavigator() {
                 name="ProfileView"
                 component={ProfileView}
                 options={{
-                    tabBarIcon: ({ color }) => (
-                        <MaterialCommunityIcons name="account-circle" color={color} size={26} />
+                    tabBarIcon: ({color}) => (
+                        <MaterialCommunityIcons name="account-circle" color={color} size={26}/>
                     )
                 }}
             />

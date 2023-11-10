@@ -13,17 +13,17 @@ function AuthNavigator() {
             <Stack.Screen
                 name="SplashView"
                 component={SplashView}
-                options={{headerShown: false, headerStyle: {backgroundColor: 'black' }}}
+                options={{headerShown: false, headerBackTitle: "",  headerStyle: {backgroundColor: 'black' }}}
             />
             <Stack.Screen
                 name="RegisterView"
                 component={RegisterView}
-                options={{headerTitle: "", headerStyle: {backgroundColor: 'black' }}}
+                options={{headerTitle: "", headerBackTitle: "", headerStyle: {backgroundColor: 'black' }}}
             />
             <Stack.Screen
                 name="LoginView"
                 component={LoginView}
-                options={{headerTitle: "", headerStyle: {backgroundColor: 'black' }}}
+                options={{headerTitle: "", headerBackTitle: "Sign Up", headerStyle: {backgroundColor: 'black' }}}
             />
             <Stack.Screen
                 name="MainNavigator"

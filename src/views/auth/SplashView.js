@@ -11,7 +11,7 @@ const SplashView = () => {
 
     return (
         <View style={{flex: 1}}>
-            <View style={{flex: 0.75, alignItems: 'center', justifyContent: 'center'}}>
+            <View style={{flex: 0.7, alignItems: 'center', justifyContent: 'center'}}>
                 <LottieView 
                     style={{width: 300, height: 300}}
                     source={require('../../../assets/flying-wallet-money.json')} 
@@ -19,7 +19,7 @@ const SplashView = () => {
                     loop
                 />
             </View>
-            <View style={{flex: 0.25, alignItems: 'center', justifyContent: 'center'}}>
+            <View style={{flex: 0.3, alignItems: 'center', justifyContent: 'center'}}>
                 <Text style={{color: 'white', fontSize: 24, fontWeight: '700'}}>PayGauge</Text>
                 <TouchableOpacity
                     style={styles.btnStarted}

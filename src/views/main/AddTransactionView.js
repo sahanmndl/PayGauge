@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import { StyleSheet, Text, View, TouchableOpacity, Alert, ActivityIndicator } from "react-native";
-import { TextInput } from "react-native-paper";
+import React, {useState} from "react";
+import {ActivityIndicator, Alert, ScrollView, StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {TextInput} from "react-native-paper";
 import Colors from "../../constants/Colors";
-import { Picker } from "@react-native-picker/picker";
+import {Picker} from "@react-native-picker/picker";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
-import { useNavigation } from "@react-navigation/native";
+import {useNavigation} from "@react-navigation/native";
 import API_LINKS from "../../utils/API_LINKS";
 
 const AddTransactionView = () => {
@@ -20,7 +20,7 @@ const AddTransactionView = () => {
 
     const addTransaction = async () => {
         const currentTimestamp = new Date()
-        if(label.trim() == "" || amount == null) {
+        if (label.trim() == "" || amount == null) {
             Alert.alert("Error!", "Inputs cannot be enpty")
         } else if (type == "type") {
             Alert.alert("Error!", "Please select your transaction type")
@@ -32,12 +32,12 @@ const AddTransactionView = () => {
                 const userId = await AsyncStorage.getItem('userId')
 
                 var updatedAmount = amount
-                if(type == "income") {
-                    if(updatedAmount < 0) {
+                if (type == "income") {
+                    if (updatedAmount < 0) {
                         updatedAmount = updatedAmount * -1
                     }
                 } else if (type == "expense") {
-                    if(updatedAmount > 0) {
+                    if (updatedAmount > 0) {
                         updatedAmount = updatedAmount * -1
                     }
                 }
@@ -54,7 +54,7 @@ const AddTransactionView = () => {
                 const data = await response.data
                 navigation.goBack()
                 return data
-            } catch(e) {
+            } catch (e) {
                 Alert.alert("Error!", "Unable to add transaction!")
             } finally {
                 setLoading(false)
@@ -63,11 +63,11 @@ const AddTransactionView = () => {
     }
 
     return (
-        <View style={{flex: 1, padding: 10, paddingBottom: 25}}>
+        <ScrollView nestedScrollEnabled={true} style={{flex: 1, padding: 10, paddingBottom: 25}}>
             <View style={{
-                paddingHorizontal: 8, 
-                paddingBottom: 10, 
-                backgroundColor: Colors.DARK, 
+                paddingHorizontal: 8,
+                paddingBottom: 10,
+                backgroundColor: Colors.DARK,
                 borderRadius: 8
             }}>
                 <TextInput
@@ -78,7 +78,7 @@ const AddTransactionView = () => {
                     activeUnderlineColor={Colors.BLUE}
                     theme={{colors: {text: 'white'}}}
                     mode='flat'
-                    left={<TextInput.Icon name='label-variant' color={Colors.DARK_GRAY} />}
+                    left={<TextInput.Icon name='label-variant' color={Colors.DARK_GRAY}/>}
                     maxLength={64}
                     value={label}
                     onChangeText={text => setLabel(text)}
@@ -92,7 +92,7 @@ const AddTransactionView = () => {
                     theme={{colors: {text: 'white'}}}
                     mode='flat'
                     keyboardType="numeric"
-                    left={<TextInput.Icon name='numeric' color={Colors.DARK_GRAY} />}
+                    left={<TextInput.Icon name='numeric' color={Colors.DARK_GRAY}/>}
                     maxLength={8}
                     value={amount}
                     onChangeText={text => setAmount(text)}
@@ -105,12 +105,12 @@ const AddTransactionView = () => {
                     activeUnderlineColor={Colors.BLUE}
                     theme={{colors: {text: 'white'}}}
                     mode='flat'
-                    left={<TextInput.Icon name='note-edit' color={Colors.DARK_GRAY} />}
+                    left={<TextInput.Icon name='note-edit' color={Colors.DARK_GRAY}/>}
                     value={note}
                     onChangeText={text => setNote(text)}
                 />
             </View>
-            <View style={{height: 20}} />
+            <View style={{height: 20}}/>
             <Picker
                 style={styles.picker}
                 mode="dropdown"
@@ -118,10 +118,12 @@ const AddTransactionView = () => {
                 selectedValue={type}
                 onValueChange={(val) => setType(val)}
             >
-                <Picker.Item label="Select Type" value="type" style={{backgroundColor: Colors.DARK, color: Colors.DARK_GRAY}}/>
-                <Picker.Item label="Income" value="income" style={styles.pickerItem}/>
-                <Picker.Item label="Expense" value="expense" style={styles.pickerItem}/>
+                <Picker.Item label="Select Type" value="type" color={Colors.DARK_GRAY}
+                             style={{backgroundColor: Colors.DARK}}/>
+                <Picker.Item label="Income" value="income" color={'white'} style={styles.pickerItem}/>
+                <Picker.Item label="Expense" value="expense" color={'white'} style={styles.pickerItem}/>
             </Picker>
+            <View style={{height: 10}}/>
             {type == "income" ? (
                 <Picker
                     style={styles.picker}
@@ -130,15 +132,16 @@ const AddTransactionView = () => {
                     selectedValue={category}
                     onValueChange={(val) => setCategory(val)}
                 >
-                    <Picker.Item label="Select Income Category" value="category" style={{backgroundColor: Colors.DARK, color: Colors.DARK_GRAY}}/>
-                    <Picker.Item label="Allowance" value="allowance" style={styles.pickerItem}/>
-                    <Picker.Item label="Commission" value="comission" style={styles.pickerItem}/>
-                    <Picker.Item label="Gifts" value="gifts" style={styles.pickerItem}/>
-                    <Picker.Item label="Interests" value="interests" style={styles.pickerItem}/>
-                    <Picker.Item label="Investments" value="investments" style={styles.pickerItem}/>
-                    <Picker.Item label="Salary" value="salary" style={styles.pickerItem}/>
-                    <Picker.Item label="Selling" value="selling" style={styles.pickerItem}/>
-                    <Picker.Item label="Miscellaneous" value="misc-income" style={styles.pickerItem}/>
+                    <Picker.Item label="Select Income Category" value="category" color={Colors.DARK_GRAY}
+                                 style={{backgroundColor: Colors.DARK, color: Colors.DARK_GRAY}}/>
+                    <Picker.Item label="Allowance" value="allowance" color={'white'} style={styles.pickerItem}/>
+                    <Picker.Item label="Commission" value="comission" color={'white'} style={styles.pickerItem}/>
+                    <Picker.Item label="Gifts" value="gifts" color={'white'} style={styles.pickerItem}/>
+                    <Picker.Item label="Interests" value="interests" color={'white'} style={styles.pickerItem}/>
+                    <Picker.Item label="Investments" value="investments" color={'white'} style={styles.pickerItem}/>
+                    <Picker.Item label="Salary" value="salary" color={'white'} style={styles.pickerItem}/>
+                    <Picker.Item label="Selling" value="selling" color={'white'} style={styles.pickerItem}/>
+                    <Picker.Item label="Miscellaneous" value="misc-income" color={'white'} style={styles.pickerItem}/>
                 </Picker>
             ) : type == "expense" ? (
                 <Picker
@@ -148,15 +151,16 @@ const AddTransactionView = () => {
                     selectedValue={category}
                     onValueChange={(val) => setCategory(val)}
                 >
-                    <Picker.Item label="Select Expense Category" value="category" style={{backgroundColor: Colors.DARK, color: Colors.DARK_GRAY}}/>
-                    <Picker.Item label="Bills" value="bills" style={styles.pickerItem}/>
-                    <Picker.Item label="Clothing" value="clothing" style={styles.pickerItem}/>
-                    <Picker.Item label="Entertainment" value="entertainment" style={styles.pickerItem}/>
-                    <Picker.Item label="Food and Drinks" value="food" style={styles.pickerItem}/>
-                    <Picker.Item label="Purchases" value="purchases" style={styles.pickerItem}/>
-                    <Picker.Item label="Subscriptions" value="subscriptions" style={styles.pickerItem}/>
-                    <Picker.Item label="Transportation" value="transportation" style={styles.pickerItem}/>
-                    <Picker.Item label="Miscellaneous" value="misc-expense" style={styles.pickerItem}/>
+                    <Picker.Item label="Select Expense Category" value="category" color={Colors.DARK_GRAY}
+                                 style={{backgroundColor: Colors.DARK, color: Colors.DARK_GRAY}}/>
+                    <Picker.Item label="Bills" value="bills" color={'white'} style={styles.pickerItem}/>
+                    <Picker.Item label="Clothing" value="clothing" color={'white'} style={styles.pickerItem}/>
+                    <Picker.Item label="Entertainment" value="entertainment" color={'white'} style={styles.pickerItem}/>
+                    <Picker.Item label="Food and Drinks" value="food" color={'white'} style={styles.pickerItem}/>
+                    <Picker.Item label="Purchases" value="purchases" color={'white'} style={styles.pickerItem}/>
+                    <Picker.Item label="Subscriptions" value="subscriptions" color={'white'} style={styles.pickerItem}/>
+                    <Picker.Item label="Transportation" value="transportation" color={'white'} style={styles.pickerItem}/>
+                    <Picker.Item label="Miscellaneous" value="misc-expense" color={'white'} style={styles.pickerItem}/>
                 </Picker>
             ) : null}
             <TouchableOpacity
@@ -166,13 +170,13 @@ const AddTransactionView = () => {
                 })}
             >
                 {loading ?
-                    <ActivityIndicator color={'white'}/> : 
+                    <ActivityIndicator color={'white'}/> :
                     <Text style={{fontSize: 16, fontWeight: '700', color: 'white'}}>
                         Save
                     </Text>
                 }
             </TouchableOpacity>
-        </View>
+        </ScrollView>
     )
 }
 
@@ -182,17 +186,18 @@ const styles = StyleSheet.create({
     picker: {
         width: '100%',
         borderWidth: 1,
+        borderRadius: 8,
         backgroundColor: Colors.DARK
     },
     pickerItem: {
-        backgroundColor: Colors.DARK, 
-        color: 'white'
+        backgroundColor: Colors.DARK,
     },
     btnSave: {
         height: 50,
         width: '100%',
         backgroundColor: Colors.BLUE,
         marginTop: 20,
+        marginBottom: 20,
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 4,

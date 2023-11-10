@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { StatusBar, Text, View, Alert, Dimensions, ScrollView, RefreshControl, Switch } from "react-native";
+import React, {useEffect, useState} from "react";
+import {Alert, Dimensions, RefreshControl, SafeAreaView, ScrollView, StatusBar, Switch, Text, View} from "react-native";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { PieChart } from "react-native-chart-kit";
+import {PieChart} from "react-native-chart-kit";
 import Colors from "../../constants/Colors";
-import { useIsFocused } from "@react-navigation/native";
-import { ProgressBar } from "react-native-paper";
+import {useIsFocused} from "@react-navigation/native";
+import {ProgressBar} from "react-native-paper";
 import API_LINKS from "../../utils/API_LINKS";
-import { VictoryPie } from "victory-native";
+import {VictoryPie} from "victory-native";
 
 const ChartsView = () => {
 
@@ -111,8 +111,8 @@ const ChartsView = () => {
     }
 
     useEffect(() => {
-        isFocused && fetchIncomeAndExpense() 
-            && fetchIncomeDetails() && fetchExpenseDetails()
+        isFocused && fetchIncomeAndExpense()
+        && fetchIncomeDetails() && fetchExpenseDetails()
     }, [isFocused])
 
     const totalData = [
@@ -245,16 +245,17 @@ const ChartsView = () => {
     ]
 
     return (
-        <View style={{flex: 1, paddingTop: StatusBar.currentHeight, paddingHorizontal: 10}}>
-            <View style={{flex: 0.075, justifyContent: 'center'}}>
+        <SafeAreaView style={{flex: 1, paddingTop: StatusBar.currentHeight, paddingHorizontal: 10}}>
+            <View style={{flex: 0.075, justifyContent: 'center', paddingHorizontal: 10}}>
                 <Text style={{color: 'white', fontSize: 30, fontWeight: '700'}}>Insights</Text>
             </View>
-            
+
             {loading ? (
-                <ProgressBar indeterminate color={'coral'} />
+                <ProgressBar indeterminate color={'coral'}/>
             ) : (
-                <ScrollView 
-                    style={{flex: 0.925}}
+                <ScrollView
+                    style={{flex: 0.925, paddingHorizontal: 10}}
+                    showsVerticalScrollIndicator={false}
                     refreshControl={
                         <RefreshControl
                             refreshing={refresh}
@@ -263,10 +264,10 @@ const ChartsView = () => {
                     }
                 >
                     <View style={{
-                        flex: 0.325, 
-                        justifyContent: 'center', 
-                        backgroundColor: Colors.DARK, 
-                        borderRadius: 8, 
+                        flex: 0.325,
+                        justifyContent: 'center',
+                        backgroundColor: Colors.DARK,
+                        borderRadius: 8,
                         paddingBottom: 10
                     }}>
                         <VictoryPie
@@ -278,9 +279,9 @@ const ChartsView = () => {
                             style={{labels: {fontSize: 14, fill: Colors.DARK_GRAY}}}
                         />
                         <View style={{
-                            flex: 1, 
-                            flexDirection: 'row', 
-                            justifyContent: 'space-between', 
+                            flex: 1,
+                            flexDirection: 'row',
+                            justifyContent: 'space-between',
                             paddingHorizontal: 10,
                             marginTop: 10
                         }}>
@@ -292,21 +293,27 @@ const ChartsView = () => {
                             </Text>
                         </View>
                     </View>
-                    <View style={{flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
+                    <View style={{
+                        flex: 1,
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        marginVertical: 10
+                    }}>
                         <Text style={{color: Colors.DARK_GRAY, fontSize: 16}}>
                             Show absolute values
                         </Text>
                         <Switch
-                            trackColor={{ false: "#767577", true: "#87CEEB" }}
-                            thumbColor={isEnabled ? Colors.BLUE : "#f4f3f4"}
+                            trackColor={{false: "#767577", true: "#5BC236"}}
+                            thumbColor={isEnabled ? 'white' : "#f4f3f4"}
                             onValueChange={() => setIsEnabled(!isEnabled)}
                             value={isEnabled}
                         />
                     </View>
                     <View style={{
-                        flex: 0.325, 
-                        justifyContent: 'center', 
-                        backgroundColor: Colors.DARK, 
+                        flex: 0.325,
+                        justifyContent: 'center',
+                        backgroundColor: Colors.DARK,
                         borderRadius: 8,
                         paddingBottom: 10
                     }}>
@@ -323,12 +330,13 @@ const ChartsView = () => {
                             accessor={"amount"}
                             absolute={isEnabled === true ? true : false}
                             avoidFalseZero={true}
+                            backgroundColor={Colors.DARK}
                         />
                     </View>
                     <View style={{
-                        flex: 0.325, 
-                        justifyContent: 'center', 
-                        backgroundColor: Colors.DARK, 
+                        flex: 0.325,
+                        justifyContent: 'center',
+                        backgroundColor: Colors.DARK,
                         borderRadius: 8,
                         marginTop: 20,
                         paddingBottom: 10,
@@ -346,17 +354,18 @@ const ChartsView = () => {
                             accessor={"amount"}
                             absolute={isEnabled === true ? true : false}
                             avoidFalseZero={true}
+                            backgroundColor={Colors.DARK}
                         />
                     </View>
                 </ScrollView>
             )}
-        </View>
+        </SafeAreaView>
     )
 }
 
 export default ChartsView
 
-const WIDTH = Dimensions.get('window').width
+const WIDTH = Dimensions.get('window').width - 20
 
 const chartConfig = {
     backgroundGradientFrom: "#1E2923",
